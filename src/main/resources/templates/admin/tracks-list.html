@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tracks Gestion</title>
+</head>
+<body>
+
+<h1>Tracks List</h1>
+
+<a th:href="@{/admin/tracks/new}">+ Aggiungi nuova track</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Azioni</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="track : ${tracks}">
+        <td th:text="${track.id}">1</td>
+        <td th:text="${track.name}">Nome Track</td>
+        <td>
+            <form th:action="@{/admin/tracks/{id}/delete(id=${track.id})}" method="post" style="display:inline">
+                <button type="submit" onclick="return confirm('Sei sicuro?')">Elimina</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(tracks)}">Nessuna pista presente nel catalogo.</p>
+
+</body>
+</html>

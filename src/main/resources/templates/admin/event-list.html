@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events Gestion</title>
+</head>
+<body>
+
+<h1>Events List</h1>
+
+<a th:href="@{/admin/event/new}">+ Aggiungi nuovo evento</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Tracciato</th>
+        <th>Vettura</th>
+        <th>Data/Ora</th>
+        <th>Max Giocatori</th>
+        <th>Status</th>
+        <th>Azioni</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="event : ${event}">
+        <td th:text="${event.id}">1</td>
+        <td th:text="${event.title}">Nome Evento</td>
+        <td th:text="${event.track.name}">Nome Track</td>
+        <td th:text="${event.car.name}">Nome Car</td>
+        <td th:text="${event.startTime}">01/01/2026 20:00</td>
+        <td th:text="${event.maxPlayers}">20</td>
+        <td th:text="${event.status}">SCHEDULED</td>
+        <td>
+            <form th:action="@{/admin/event/{id}/delete(id=${event.id})}" method="post" style="display:inline">
+                <button type="submit" onclick="return confirm('Sei sicuro?')">Elimina</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(event)}">Nessun evento presente nel calendario.</p>
+
+</body>
+</html>

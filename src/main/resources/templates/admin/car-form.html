@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Auto</title>
+    <link rel="stylesheet" th:href="@{/css/car-form.css}">
+</head>
+<body>
+
+<h1 th:text="${carId} != null ? 'Modifica Auto' : 'Nuova Auto'">Form Auto</h1>
+
+<form th:action="${carId} != null ? @{/admin/cars/{id}(id=${carId})} : @{/admin/cars}"
+      th:object="${carDto}"
+      method="post">
+
+    <label for="name">Nome:</label>
+    <input type="text" id="name" th:field="*{name}">
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">Errore nome</p>
+
+    <label for="carClass">Classe:</label>
+    <select id="carClass" th:field="*{carClass}">
+        <option value="">-- Seleziona una classe --</option>
+        <option th:each="classValue : ${carClasses}"
+                th:value="${classValue}"
+                th:text="${classValue}"></option>
+    </select>
+    <p th:if="${#fields.hasErrors('carClass')}" th:errors="*{carClass}" style="color:red">Errore classe</p>
+
+    <button type="submit" class="save-button">Salva</button>
+</form>
+
+<a th:href="@{/admin/cars}">Torna all'elenco</a>
+
+</body>
+</html>

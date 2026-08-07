@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/base}">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Home</title>
+</head>
+
+<body>
+
+<main layout:fragment="content">
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-left">
+            <p class="top">LA COMMUNITY ITALIANA DI</p>
+            <h1 class="AssettoCorsa">ASSETTO CORSA</h1>
+            <p class="down">Unisciti alla community italiana di Assetto Corsa. <br>
+                partecipa agli eventi, migliora la tua performance<br>
+                e vivi la passione per il sim racing.</p>
+
+            <!-- ⬇️ BOTTONE / FORM USERNAME AGGIUNTO QUI ⬇️ -->
+            <div sec:authorize="isAuthenticated()" style="margin-top: 20px;">
+                <form th:action="@{/api/profile/update}" method="post" style="display: inline-flex; gap: 10px; align-items: center;">
+                    <input type="text"
+                           name="username"
+                           th:value="${#authentication.principal.user.username}"
+                           placeholder="Nuovo Username"
+                           required
+                           style="padding: 8px 12px; border-radius: 4px; border: 1px solid #444; background: #222; color: #fff;">
+                    <button type="submit" class="btn btn-card">
+                        <i class="bi bi-pencil-square"></i> Salva
+                    </button>
+                </form>
+            </div>
+
+            <!-- ⬆️ FINE BOTTONE USERNAME ⬆️ -->
+
+        </div>
+
+        <div class="hero-right" th:if="${nextEvent != null}">
+            <div class="hero-card">
+                <p style="
+        color: #ffffffed;
+        font-weight: 400;
+        padding-top: 6px;
+        text-align: center;
+        ">NEXT EVENT - <span th:text="${nextEvent.title}"> </span></p>
+                <div class="separator"></div>
+                <div class="card-image card-image-small"
+                     th:style="'background-image: url(/images/tracks/' + ${nextEvent.trackImageUrl} + ')'">
+                    <div class="track-name" th:text="${nextEvent.trackName}">Track</div>
+                </div>
+                <div class="card-description">
+                    <p>
+                        <i class="bi bi-calendar-event"></i>
+                        <span th:text="${#temporals.format(nextEvent.startTime, 'dd MMMM yyyy')}">--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-clock"></i>
+                        <span th:text="${#temporals.format(nextEvent.startTime, 'HH:mm')}">--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-car-front-fill"></i>
+                        <span th:text="${nextEvent.carName}">Car</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-people"></i>
+                        <span th:text="${nextEvent.registeredPlayers} + '/' + ${nextEvent.maxPlayers}">--/--</span>
+                    </p>
+                </div>
+
+                <div class="buttons-card">
+                    <a th:href="@{/events}" class="btn btn-card">
+                        <i class="bi bi-info-circle"></i> INFO
+                    </a>
+                    <a th:href="@{/registrati}" class="btn btn-card">SIGN UP</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="hero-right" th:if="${nextEvent == null}">
+            <div class="hero-card">
+                <p style="
+        color: #ffffffed;
+        font-weight: 400;
+        padding-top: 6px;
+        text-align: center;
+        ">NO UPCOMING EVENTS </p>
+                <div class="separator"></div>
+                <div class="card-image">
+                    <div class="track-name">---</div>
+                </div>
+                <div class="card-description">
+                    <p>
+                        <i class="bi bi-calendar-event"></i>
+                        <span>--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-clock"></i>
+                        <span>--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-car-front-fill"></i>
+                        <span>---</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-people"></i>
+                        <span>--/--</span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="~{components/events-list :: eventsList(${scheduledEvents}, true)}"></div>
+
+    <!-- NEWS + SIDEBAR -->
+    <section class="news-partners">
+        <div class="news">Ultime News</div>
+        <div class="sidebar">Partner + CTA</div>
+    </section>
+
+</main>
+
+</body>
+</html>

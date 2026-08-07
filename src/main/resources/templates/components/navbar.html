@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+
+<nav th:fragment="navbar" class="navbar">
+
+    <div class="navbar-logo">
+        <a th:href="@{/home}" class="navbar-logo-link">
+            <img th:src="@{/images/logo.svg}" alt="RaceHub Logo" class="navbar-logo-icon">
+            <div class="navbar-logo-text">
+                <span class="navbar-logo-title">RACEHUB</span>
+                <span class="navbar-logo-subtitle">COMMUNITY</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <a th:href="@{/home}" class="navbar-link active">Home</a>
+        <a th:href="@{/eventi}" class="navbar-link">Eventi</a>
+        <a th:href="@{/classifiche}" class="navbar-link">Classifiche</a>
+        <a th:href="@{/community}" class="navbar-link">Community</a>
+        <a th:href="@{/news}" class="navbar-link">News</a>
+        <a th:href="@{/shop}" class="navbar-link">Shop</a>
+    </div>
+
+    <div class="navbar-actions">
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/auth/steam/logout}" class="btn btn-primary">
+                Logout
+            </a>
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/auth/steam}" class="btn btn-primary">
+                Login with Steam
+                <img th:src="@{https://cdn.freebiesupply.com/images/large/2x/steam-logo-black-transparent.png}" alt="" class="btn-icon"></a>
+        </div>
+    </div>
+
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+/* ==========================================================================
+   VARIABILI GLOBALI
+   ========================================================================== */
+:root {
+    --color-bg-dark: #0a0e1a;
+    --color-bg-navbar: #0d1220;
+    --color-blue: #2563eb;
+    --color-blue-hover: #1d4ed8;
+    --color-white: #ffffff;
+    --color-text-muted: #94a3b8;
+    --color-border: #1e2436;
+    --color-text: #ffffffed;
+
+    --font-main: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-bg-dark);
+    color: var(--color-white);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background-color: var(--color-bg-navbar);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* --- Logo --- */
+.navbar-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.navbar-logo-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.navbar-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.navbar-logo-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.navbar-logo-subtitle {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--color-blue);
+}
+
+/* --- Menu centrale --- */
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+}
+
+.navbar-link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-white);
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.navbar-link:hover {
+    color: var(--color-blue);
+}
+
+.navbar-link.active {
+    color: var(--color-blue);
+    border-bottom-color: var(--color-blue);
+}
+
+/* --- Azioni a destra --- */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.navbar-search:hover {
+    background-color: var(--color-border);
+}
+
+/* --- Bottoni riutilizzabili --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-white);
+}
+
+.btn-outline:hover {
+    border-color: var(--color-white);
+}
+
+.btn-primary {
+    background-color: var(--color-blue);
+    border: 1px solid var(--color-blue);
+    color: var(--color-white);
+}
+
+.btn-card {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    display: flex;
+    margin: 5px auto;
+    font-weight: 400;
+    letter-spacing: 5px;
+}
+
+.btn-card:hover {
+      background-color: var(--color-blue-hover);
+      }
+
+.btn-primary:hover {
+    background-color: var(--color-blue-hover);
+}
+
+.hero {
+    background-image:
+        linear-gradient(to bottom, #0a0e1a 0%, rgba(255, 24, 1, 0) 3%),
+        linear-gradient(to right, #0a0e1a 8%, rgba(255, 24, 1, 0) 142%),
+        url("https://thumbs.dreamstime.com/b/futuristic-supercar-racing-neon-lit-track-sunset-dynamic-high-speed-shot-futuristic-black-supercar-racing-402482714.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: clamp(20px, 4vh, 40px) clamp(20px, 6vw, 90px) 0;
+    gap: clamp(16px, 3vw, 48px);
+    min-height: 500px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.hero .top {
+    color: var(--color-blue);
+    font-weight: 700;
+}
+
+.AssettoCorsa {
+    margin-bottom: 8px;
+    font-size: 3.2rem;
+}
+
+.hero .down {
+line-height: 33px;
+}
+
+.hero-card {
+    background-color: rgba(10 14 26 / 85%);
+    height: 455px;
+    max-width: 330px;
+    border-radius: 12px;
+    border: 1px solid rgba(37, 99, 235, 0.4);
+}
+
+
+.separator {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #007bff4f, transparent);
+    margin: 7px auto;
+}
+
+.card-description {
+    padding: 3px 0px 7px 20px;
+    line-height: 2;
+    font-weight: lighter;
+    font-size: 16px;
+    color: #ffffffed;
+
+}
+
+.card-description p {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+}
+
+.card-image {
+    background-position: center;
+    background-size: 130%;
+    border-radius: 13px;
+    height: 40%;
+    width: auto;
+    margin: 13px 9px;
+    position: relative;
+
+    .track-name {
+        border-radius: 4px;
+        max-width: fit-content;
+        background-color: rgba(10 14 26 / 85%);
+        position: absolute;
+        bottom: 10px;
+        left: 11px;
+        padding: 2px 7px;
+        color: #ffffffed;
+    }
+}
+
+.card-image-small {
+    height: 35%;
+}
+
+.scheduled-events {
+    padding: clamp(13px, 2vh, 40px) clamp(20px, 4vw, 90px) 0;
+    gap: clamp(16px, 3vw, 48px);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.upcoming-events {
+    display: inline-block;
+    margin: 16px 0px 0px 42px;
+    font-size: 2.6rem;
+}
+
+.line-view-all {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 85%;
+    margin: 17px auto;
+
+    &::before {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #007bffab);
+        }
+
+        /* La linea a destra ha una lunghezza fissa */
+        &::after {
+            content: "";
+            width: 150px; /* Regola questa misura come preferisci */
+            height: 1px;
+            background-color: #007bffab;;
+        }
+}
+
+.view-all {
+    color: var(--color-text);
+    font-size: 1.45rem;
+    font-weight: 400;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+
+}
+
+.view-all:hover {
+    color: var(--color-blue-hover);
+}
+
+.buttons-card {
+    display: flex;
+}

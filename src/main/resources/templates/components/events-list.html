@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="eventsList(events, showViewAll)">
+    <section class="scheduled">
+        <span class="upcoming-events">UPCOMING EVENTS</span>
+        <div class="scheduled-events">
+
+            <p class="no-events" th:if="${#lists.isEmpty(events)}">
+                Nessun evento in programma al momento.
+            </p>
+
+            <div class="hero-card" th:each="event : ${events}">
+                <p style="
+                    color: #ffffffed;
+                    font-weight: 400;
+                    padding-top: 6px;
+                    text-align: center;
+                ">NEXT EVENT - <span th:text="${event.title}"></span></p>
+                <div class="separator"></div>
+                <div class="card-image card-image-small"
+                     th:style="'background-image: url(' + @{'/images/tracks/' + ${event.trackImageUrl}} + ')'">
+                    <div class="track-name" th:text="${event.trackName}">Track</div>
+                </div>
+
+
+                <div class="card-description">
+                    <p>
+                        <i class="bi bi-calendar-event"></i>
+                        <span th:text="${#temporals.format(event.startTime, 'dd MMMM yyyy')}">--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-clock"></i>
+                        <span th:text="${#temporals.format(event.startTime, 'HH:mm')}">--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-geo-alt"></i>
+                        <span th:text="${event.trackName}">Track</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-car-front-fill"></i>
+                        <span th:text="${event.carName}">Car</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-people"></i>
+                        <span th:text="${event.registeredPlayers} + '/' + ${event.maxPlayers}">--/--</span>
+                    </p>
+                </div>
+
+                <div class="buttons-card">
+                    <a th:href="@{/events}" class="btn btn-card">
+                        <i class="bi bi-info-circle"></i> INFO
+                    </a>
+                    <a th:href="@{/registrati}" class="btn btn-card">SIGN UP</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="line-view-all" th:if="${showViewAll}">
+            <a th:href="@{/events}"><span class="view-all">VIEW ALL</span></a>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

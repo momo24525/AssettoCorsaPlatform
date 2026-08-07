@@ -1,0 +1,15 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="update-profile-form">
+    <div style="margin-top: 20px;">
+        <form th:action="@{/api/profile/update}" method="post" style="display: inline-flex; gap: 10px; align-items: center;">
+            <input type="text" name="username" th:value="${#authentication.principal.user.username}" ... required>
+            <button type="submit" class="btn btn-card">
+                <i class="bi bi-pencil-square"></i> Salva
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

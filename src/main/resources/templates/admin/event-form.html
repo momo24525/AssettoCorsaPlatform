@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Event</title>
+    <link rel="stylesheet" th:href="@{/css/event-form.css}">
+</head>
+<body>
+
+<h1 th:text="${eventId} != null ? 'Modifica Event' : 'Nuovo Event'">Form Event</h1>
+
+<form th:action="${eventId} != null ? @{/admin/event/{id}(id=${eventId})} : @{/admin/event}"
+      th:object="${eventDto}"
+      method="post">
+
+    <label for="title">Nome evento (title):</label>
+    <input type="text" id="title" th:field="*{title}">
+    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red">Errore numero giocatori</p>
+
+    <label for="trackId">Tracciato:</label>
+    <select id="trackId" th:field="*{trackId}">
+        <option value="">-- Seleziona tracciato --</option>
+        <option th:each="track : ${tracks}"
+                th:value="${track.id}"
+                th:text="${track.name}">Nome Track</option>
+    </select>
+    <p th:if="${#fields.hasErrors('trackId')}" th:errors="*{trackId}" style="color:red">Errore tracciato</p>
+
+    <label for="carId">Vettura:</label>
+    <select id="carId" th:field="*{carId}">
+        <option value="">-- Seleziona vettura --</option>
+        <option th:each="car : ${cars}"
+                th:value="${car.id}"
+                th:text="${car.name}">Nome Car</option>
+    </select>
+    <p th:if="${#fields.hasErrors('carId')}" th:errors="*{carId}" style="color:red">Errore vettura</p>
+
+    <label for="startTime">Data e ora di partenza:</label>
+    <input type="datetime-local" id="startTime" th:field="*{startTime}">
+    <p th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" style="color:red">Errore data/ora</p>
+
+    <label for="maxPlayers">Numero massimo giocatori:</label>
+    <input type="number" id="maxPlayers" th:field="*{maxPlayers}" min="1">
+    <p th:if="${#fields.hasErrors('maxPlayers')}" th:errors="*{maxPlayers}" style="color:red">Errore numero giocatori</p>
+
+    <label for="qualyDuration">Durata quali (minuti):</label>
+    <input type="number" id="qualyDuration" th:field="*{qualyDuration}" min="1">
+    <p th:if="${#fields.hasErrors('qualyDuration')}" th:errors="*{qualyDuration}" style="color:red">Errore durata quali</p>
+
+    <label for="raceDuration">Durata gara (minuti):</label>
+    <input type="number" id="raceDuration" th:field="*{raceDuration}" min="1">
+    <p th:if="${#fields.hasErrors('raceDuration')}" th:errors="*{raceDuration}" style="color:red">Errore durata gara</p>
+
+    <button type="submit" class="save-button">Salva</button>
+</form>
+
+<a th:href="@{/admin/event}">Torna all'elenco</a>
+
+</body>
+</html>

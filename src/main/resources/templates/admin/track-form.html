@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Track</title>
+    <link rel="stylesheet" th:href="@{/css/track-form.css}">
+</head>
+<body>
+
+<h1 th:text="${trackId} != null ? 'Modifica Track' : 'Nuova Track'">Form Track</h1>
+
+<form th:action="${trackId} != null ? @{/admin/tracks/{id}(id=${trackId})} : @{/admin/tracks}"
+      th:object="${trackDto}"
+      method="post">
+
+    <label for="name">Nome:</label>
+    <input type="text" id="name" th:field="*{name}">
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red">Errore nome</p>
+
+    <button type="submit" class="save-button">Salva</button>
+</form>
+
+<a th:href="@{/admin/tracks}">Torna all'elenco</a>
+
+</body>
+</html>

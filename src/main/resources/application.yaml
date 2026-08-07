@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: ac-community-ita
+  profiles:
+    active: dev
+
+---
+# Profilo DEV
+spring:
+  config:
+    activate:
+      on-profile: dev
+  thymeleaf:
+    cache: false
+
+  datasource:
+    # "file:./data/mydb" salva il database in una cartella chiamata "data" dentro il tuo progetto
+    url: jdbc:h2:file:./data/mydb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+steam:
+  realm: "http://localhost:8080/"
+  return-url: "http://localhost:8080/auth/steam/callback"
+
+---
+# Profilo PROD
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/accommunity
+    driverClassName: org.postgresql.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  h2:
+    console:
+      enabled: false

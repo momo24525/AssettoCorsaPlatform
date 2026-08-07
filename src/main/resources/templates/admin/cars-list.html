@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Auto</title>
+</head>
+<body>
+
+<h1>Elenco Auto</h1>
+
+<a th:href="@{/admin/cars/new}">+ Aggiungi nuova auto</a>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Classe</th>
+        <th>Creata il</th>
+        <th>Azioni</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${car.id}">1</td>
+        <td th:text="${car.name}">Nome Auto</td>
+        <td th:text="${car.carClass}">GT3</td>
+        <td th:text="${car.createdAt}">2026-01-01</td>
+        <td>
+            <a th:href="@{/admin/cars/{id}/edit(id=${car.id})}">Modifica</a>
+
+            <form th:action="@{/admin/cars/{id}/delete(id=${car.id})}" method="post" style="display:inline">
+                <button type="submit" onclick="return confirm('Sei sicuro?')">Elimina</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(cars)}">Nessuna auto presente nel catalogo.</p>
+
+</body>
+</html>
