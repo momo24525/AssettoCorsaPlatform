@@ -22,23 +22,6 @@
                 partecipa agli eventi, migliora la tua performance<br>
                 e vivi la passione per il sim racing.</p>
 
-            <!-- ⬇️ BOTTONE / FORM USERNAME AGGIUNTO QUI ⬇️ -->
-            <div sec:authorize="isAuthenticated()" style="margin-top: 20px;">
-                <form th:action="@{/api/profile/update}" method="post" style="display: inline-flex; gap: 10px; align-items: center;">
-                    <input type="text"
-                           name="username"
-                           th:value="${#authentication.principal.user.username}"
-                           placeholder="Nuovo Username"
-                           required
-                           style="padding: 8px 12px; border-radius: 4px; border: 1px solid #444; background: #222; color: #fff;">
-                    <button type="submit" class="btn btn-card">
-                        <i class="bi bi-pencil-square"></i> Salva
-                    </button>
-                </form>
-            </div>
-
-            <!-- ⬆️ FINE BOTTONE USERNAME ⬆️ -->
-
         </div>
 
         <div class="hero-right" th:if="${nextEvent != null}">
@@ -125,6 +108,11 @@
         <div class="news">Ultime News</div>
         <div class="sidebar">Partner + CTA</div>
     </section>
+
+    <th:block th:if="${showUpdateProfile}">
+        <div th:replace="~{components/update-profile-form :: update-profile-form}">
+        </div>
+    </th:block>
 
 </main>
 

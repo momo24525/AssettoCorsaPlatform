@@ -20,14 +20,9 @@ public class UserService {
 
     public User findOrCreateFromSteam(SteamPlayer profile) {
         return userRepository.findBySteamId(profile.steamid)
-                .map(existingUser -> updateProfileData(existingUser, profile))
                 .orElseGet(() -> createNewUser(profile));
     }
 
-    private User updateProfileData(User user, SteamPlayer profile) {
-        user.setAvatarUrl(profile.avatarfull);
-        return userRepository.save(user);
-    }
 
     private User createNewUser(SteamPlayer profile) {
         User user = new User();
@@ -39,21 +34,32 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUserProfile(String steamId, UpdateProfileDto updateProfileDto) {
-        // 1. Cercare l'utente o lanciare un'eccezione se non esiste a DB
+    public User updateUserProfile(String steamId, UpdateProfileDto dto) {
+
         User user = userRepository.findBySteamId(steamId)
-                .orElseThrow(() -> new IllegalArgumentException("Utente non trovato per steamId: " + steamId));
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Utente non trovato"));
 
-        // 2. Aggiornare solo i campi presenti nel DTO
-        if (updateProfileDto.getUsername() != null && !updateProfileDto.getUsername().isBlank()) {
-            user.setUsername(updateProfileDto.getUsername());
+        if (dto.getUsername() != null && !dto.getUsername().isBlank()) {
+
+            boolean usernameTaken = userRepository
+                    .existsByUsername(dto.getUsername());
+
+            if (usernameTaken &&
+                    !user.getUsername().equals(dto.getUsername())) {
+
+                throw new IllegalArgumentException(
+                        "Username già in uso"
+                );
+            }
+            user.setUsername(dto.getUsername());
+            user.setCompleted(true);
         }
 
-        if (updateProfileDto.getAvatar() != null && !updateProfileDto.getAvatar().isBlank()) {
-            user.setAvatarUrl(updateProfileDto.getAvatar());
+        if (dto.getAvatar() != null && !dto.getAvatar().isBlank()) {
+            user.setAvatarUrl(dto.getAvatar());
         }
 
-        // 3. Salvare l'utente aggiornato
         return userRepository.save(user);
     }
 

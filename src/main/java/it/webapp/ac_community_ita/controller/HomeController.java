@@ -1,6 +1,9 @@
 package it.webapp.ac_community_ita.controller;
 
+import it.webapp.ac_community_ita.config.UserPrincipal;
+import it.webapp.ac_community_ita.entity.User;
 import it.webapp.ac_community_ita.service.EventService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +18,21 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(
+            @AuthenticationPrincipal UserPrincipal userPrincipal,
+            Model model
+    ) {
+        if (userPrincipal != null) {
+            User user = userPrincipal.getUser();
+
+            System.out.println("USERNAME: " + user.getUsername());
+            System.out.println("COMPLETED: " + user.isCompleted());
+
+
+            model.addAttribute("showUpdateProfile", !user.isCompleted());
+        } else {
+            model.addAttribute("showUpdateProfile", false);
+        }
         eventService.getNextEvent()
                 .ifPresent(dto -> model.addAttribute("nextEvent", dto));
         model.addAttribute("scheduledEvents", eventService.getUpcomingEvents(6));

@@ -2,14 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="update-profile-form">
-    <div style="margin-top: 20px;">
-        <form th:action="@{/api/profile/update}" method="post" style="display: inline-flex; gap: 10px; align-items: center;">
-            <input type="text" name="username" th:value="${#authentication.principal.user.username}" ... required>
+
+    <div class="card-update-profile">
+
+        <form th:action="@{/api/profile/update}" method="post" class="update-profile-form">
+            <h4 class="card-title">Choose your username</h4>
+            <div class="input-group-custom">
+                <input type="text"
+                       name="username"
+                       class="form-input-custom"
+                       placeholder="Inserisci username"
+                       required>
+            </div>
             <button type="submit" class="btn btn-card">
                 <i class="bi bi-pencil-square"></i> Salva
             </button>
         </form>
     </div>
+
 </div>
 </body>
 </html>

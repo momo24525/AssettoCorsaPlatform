@@ -44,7 +44,7 @@ public class SteamAuthController {
         steamAuthenticationService.logout(request, response);
 
         // Il controller si occupa solo della navigation/redirect
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/callback")
@@ -64,7 +64,10 @@ public class SteamAuthController {
         request.changeSessionId(); // previene session fixation
         steamAuthenticationService.authenticate(user, request, response);
 
-        return "redirect:/update-profile";
+        if(user.isCompleted()) {
+            return "redirect:/home";
+        }
+        return "redirect:/api/profile/update";
     }
 
 

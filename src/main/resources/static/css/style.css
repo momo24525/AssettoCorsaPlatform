@@ -312,3 +312,57 @@ line-height: 33px;
 .buttons-card {
     display: flex;
 }
+
+/***SEZIONE UPDATE PROFILE***********/
+/* Card Contenitore */
+.card-update-profile {
+  background: #ffffff;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  max-width: 480px;
+  display: flex;
+  margin: 5rem auto;
+}
+
+/* Titolo opzionale della card */
+.card-update-profile .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    max-height: 30px;
+    width: 100%;
+}
+
+/* Layout del Form */
+.update-profile-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap; /* Rende il form responsive sui dispositivi mobili */
+}
+
+.input-group-custom {
+  flex: 1; /* Occupa tutto lo spazio disponibile */
+  min-width: 200px;
+}
+
+/* Style dell'Input di testo */
+.form-input-custom {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+.form-input-custom:focus {
+  background-color: #ffffff;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+/***SEZIONE UPDATE PROFILE***********/

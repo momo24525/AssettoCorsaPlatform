@@ -23,7 +23,8 @@ public class UserProfileController {
     @GetMapping("/update")
     public String showUpdateForm(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
         String steamId = userPrincipal.getUser().getSteamId();
-        model.addAttribute("updateProfileDto", userService.getUpdateProfileDto(steamId));
+        model.addAttribute(
+                "updateProfileDto", userService.getUpdateProfileDto(steamId));
         return "update-profile";
     }
 

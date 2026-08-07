@@ -20,7 +20,7 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "steam_id", nullable = false, unique = true)
@@ -35,6 +35,9 @@ public class User {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "completed", nullable = false)
+    private boolean completed = false;
 
 
 }
