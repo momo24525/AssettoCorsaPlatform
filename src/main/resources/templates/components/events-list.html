@@ -52,7 +52,9 @@
                     <a th:href="@{/events}" class="btn btn-card">
                         <i class="bi bi-info-circle"></i> INFO
                     </a>
-                    <a th:href="@{/registrati}" class="btn btn-card">SIGN UP</a>
+                    <form th:action="@{/events/{id}/register(id=${event.id})}" method="post">
+                        <button type="submit" class="btn btn-card">SIGN UP</button>
+                    </form>
                 </div>
             </div>
 

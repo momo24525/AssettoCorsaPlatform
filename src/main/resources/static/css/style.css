@@ -314,25 +314,44 @@ line-height: 33px;
 }
 
 /***SEZIONE UPDATE PROFILE***********/
-/* Card Contenitore */
+/* Overlay a tutto schermo */
+.profile-modal-overlay {
+    position: fixed;
+    inset: 0; /* top:0 right:0 bottom:0 left:0 */
+    background: rgba(10, 14, 26, 0.75);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
 .card-update-profile {
-  background: #ffffff;
-  padding: 20px 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f0f0f0;
-  max-width: 480px;
-  display: flex;
-  margin: 5rem auto;
+    background: var(--color-bg-navbar);
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--color-blue-hover);
+    max-width: 480px;
+    width: 90%;
+    height: 24rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
 
 /* Titolo opzionale della card */
 .card-update-profile .card-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
     max-height: 30px;
     width: 100%;
+}
+
+.card-update-profile .label {
+    font-size: 1.3rem;
+    margin: 4px;
 }
 
 /* Layout del Form */

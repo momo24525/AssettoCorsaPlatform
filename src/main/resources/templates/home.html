@@ -60,7 +60,9 @@
                     <a th:href="@{/events}" class="btn btn-card">
                         <i class="bi bi-info-circle"></i> INFO
                     </a>
-                    <a th:href="@{/registrati}" class="btn btn-card">SIGN UP</a>
+                    <form th:action="@{/events/{id}/register(id=${nextEvent.id})}" method="post">
+                        <button type="submit" class="btn btn-card">SIGN UP</button>
+                    </form>
                 </div>
 
             </div>
@@ -110,7 +112,8 @@
     </section>
 
     <th:block th:if="${showUpdateProfile}">
-        <div th:replace="~{components/update-profile-form :: update-profile-form}">
+        <div class="profile-modal-overlay">
+            <div th:replace="~{components/update-profile-form :: update-profile-form}"></div>
         </div>
     </th:block>
 

@@ -9,7 +9,8 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "registration")
+@Table(name = "registration",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "event_id"}))
 @Getter
 @Setter
 @NoArgsConstructor

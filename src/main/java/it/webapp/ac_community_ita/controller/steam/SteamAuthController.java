@@ -64,10 +64,7 @@ public class SteamAuthController {
         request.changeSessionId(); // previene session fixation
         steamAuthenticationService.authenticate(user, request, response);
 
-        if(user.isCompleted()) {
-            return "redirect:/home";
-        }
-        return "redirect:/api/profile/update";
+        return "redirect:/home";
     }
 
 

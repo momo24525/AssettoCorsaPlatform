@@ -70,4 +70,9 @@ public class UserService {
         return new UpdateProfileDto(user.getUsername(), user.getAvatarUrl());
     }
 
+    public User findbySteamId (String steamId) {
+        return userRepository.findBySteamId(steamId)
+                .orElseThrow(() -> new RuntimeException("User not found for steamId: " + steamId));
+    }
+
 }
