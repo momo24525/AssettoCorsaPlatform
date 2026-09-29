@@ -27,33 +27,38 @@ public class EventService {
         this.registrationRepository = registrationRepository;
     }
 
-    public Optional<EventSummaryDto> getNextEvent() {
+    public Optional<EventSummaryDto> getNextEvent(Long viewerId) {
         List<Event> upcomingEvents = eventRepository.findUpcomingEvents(LocalDateTime.now(), PageRequest.of(0,1));
 
         return upcomingEvents.stream()
                 .findFirst()
-                .map(this::toSummaryDto);
+                .map(event -> toSummaryDto(event, viewerId));
     }
 
-    public List<EventSummaryDto> getUpcomingEvents(int limit) {
+    public List<EventSummaryDto> getUpcomingEvents(int limit, Long viewerId) {
         return eventRepository.findUpcomingEvents(LocalDateTime.now(), PageRequest.of(0, limit))
                 .stream()
-                .map(this::toSummaryDto)
+                .map(event -> toSummaryDto(event, viewerId))
                 .collect(Collectors.toList());
     }
 
-    public List<EventSummaryDto> getAllUpcomingEvents() {
+    public List<EventSummaryDto> getAllUpcomingEvents(Long viewerId) {
         return eventRepository.findUpcomingEvents(LocalDateTime.now(), Pageable.unpaged())
                 .stream()
-                .map(this::toSummaryDto)
+                .map(event -> toSummaryDto(event, viewerId))
                 .collect(Collectors.toList());
     }
 
-    private EventSummaryDto toSummaryDto(Event event) {
+    private EventSummaryDto toSummaryDto(Event event, Long viewerId) {
         long registeredCount = registrationRepository.countByEventIdAndStatus(
                 event.getId(),
                 RegistrationStatus.CONFIRMED
         );
+
+        boolean registered = viewerId != null
+                && registrationRepository.findByUserIdAndEventId(viewerId, event.getId())
+                .map(r -> r.getStatus() != RegistrationStatus.CANCELLED)
+                .orElse(false);
 
         return new EventSummaryDto(
                 event.getId(),
@@ -63,7 +68,8 @@ public class EventService {
                 event.getStartTime(),
                 (int) registeredCount,
                 event.getMaxPlayers(),
-                event.getTrack().getUrlImage()
+                event.getTrack().getUrlImage(),
+                registered
         );
     }
 }

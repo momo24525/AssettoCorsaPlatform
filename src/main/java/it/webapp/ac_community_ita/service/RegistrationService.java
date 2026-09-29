@@ -78,6 +78,20 @@ public class RegistrationService {
 
         return registration.getStatus();
     }
+
+    @Transactional
+    public void cancel(Long userId, Long eventId) {
+        // 1. trova la registrazione con findByUserIdAndEventId
+        Optional<Registration> existing = registrationRepository.findByUserIdAndEventId(userId, eventId);
+        // 2. se non esiste, o è già CANCELLED, lancia un'eccezione
+        if (existing.isEmpty() || existing.get().getStatus() == RegistrationStatus.CANCELLED)
+        {throw new IllegalStateException("Registrazione inesistente o già cancellata");}
+
+        // 3. altrimenti, imposta lo stato a CANCELLED e salva
+        Registration registration = existing.get();
+        registration.setStatus(RegistrationStatus.CANCELLED);
+        registrationRepository.save(registration);
+    }
 }
 
 

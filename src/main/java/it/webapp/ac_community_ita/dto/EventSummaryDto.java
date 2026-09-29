@@ -17,6 +17,7 @@ public class EventSummaryDto {
     private int registeredPlayers;
     private int maxPlayers;
     private String trackImageUrl;
+    private boolean registered;
 
     public int getPostiRimanenti() {
         return maxPlayers - registeredPlayers;

@@ -313,6 +313,12 @@ line-height: 33px;
     display: flex;
 }
 
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 /***SEZIONE UPDATE PROFILE***********/
 /* Overlay a tutto schermo */
 .profile-modal-overlay {

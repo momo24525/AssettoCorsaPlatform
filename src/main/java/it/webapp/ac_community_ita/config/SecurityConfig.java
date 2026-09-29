@@ -16,8 +16,8 @@ public class SecurityConfig {
                         //.requestMatchers("/", "/home", "/events", "/error", "/races", "/races/{id}").permitAll()
                         .requestMatchers("/", "/auth/steam", "/auth/steam/callback", "/home").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf

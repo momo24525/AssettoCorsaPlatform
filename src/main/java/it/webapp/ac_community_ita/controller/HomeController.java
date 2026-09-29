@@ -21,21 +21,17 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home(
-            @AuthenticationPrincipal UserPrincipal userPrincipal,
-            Model model
-    ) {
+    public String home(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model) {
+        Long viewerId = null;
         if (userPrincipal != null) {
-            String steamId = userPrincipal.getUser().getSteamId();
-            User user = userService.findbySteamId(steamId); // <-- utente fresco dal DB
-
+            User user = userPrincipal.getUser();
+            viewerId = user.getId();
             model.addAttribute("showUpdateProfile", !user.isCompleted());
         } else {
             model.addAttribute("showUpdateProfile", false);
         }
-        eventService.getNextEvent()
-                .ifPresent(dto -> model.addAttribute("nextEvent", dto));
-        model.addAttribute("scheduledEvents", eventService.getUpcomingEvents(6));
+        eventService.getNextEvent(viewerId).ifPresent(dto -> model.addAttribute("nextEvent", dto));
+        model.addAttribute("scheduledEvents", eventService.getUpcomingEvents(6, viewerId));
         return "home";
     }
 }

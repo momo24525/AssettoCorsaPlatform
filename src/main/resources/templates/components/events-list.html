@@ -52,8 +52,18 @@
                     <a th:href="@{/events}" class="btn btn-card">
                         <i class="bi bi-info-circle"></i> INFO
                     </a>
-                    <form th:action="@{/events/{id}/register(id=${event.id})}" method="post">
+
+                    <span th:if="${!nextEvent.registered && nextEvent.postiRimanenti <= 0}"
+                          class="btn btn-card btn-disabled">EVENTO PIENO</span>
+
+                    <form th:if="${!nextEvent.registered && nextEvent.postiRimanenti > 0}"
+                          th:action="@{/events/{id}/register(id=${nextEvent.id})}" method="post">
                         <button type="submit" class="btn btn-card">SIGN UP</button>
+                    </form>
+
+                    <form th:if="${nextEvent.registered}"
+                          th:action="@{/events/{id}/cancel(id=${nextEvent.id})}" method="post">
+                        <button type="submit" class="btn btn-card">ANNULLA ISCRIZIONE</button>
                     </form>
                 </div>
             </div>
