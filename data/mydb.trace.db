@@ -792,3 +792,12 @@ UPDATE USERS SET ROLE = "ADMIN" [42122-240]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
 	at java.base/java.lang.Thread.run(Thread.java:840)
+2026-09-29 12:02:41.705730+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "UPDATE [*]'EVENT' SET MAX_PLAYERS = 1 WHERE ID = 136"; expected "identifier"; SQL statement:
+UPDATE 'EVENT' SET MAX_PLAYERS = 1 WHERE ID = 136 [42001-240]
+2026-09-29 12:03:00.208983+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "UPDATE [*]'EVENT' SET 'MAX_PLAYERS' = 1 WHERE 'ID' = 136"; expected "identifier"; SQL statement:
+UPDATE 'EVENT' SET 'MAX_PLAYERS' = 1 WHERE 'ID' = 136 [42001-240]
+2026-10-01 15:54:38.635389+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM [*]'PENDING_RESULT'"; expected "identifier"; SQL statement:
+DELETE FROM 'PENDING_RESULT' [42001-240]

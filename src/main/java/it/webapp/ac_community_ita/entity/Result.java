@@ -35,11 +35,11 @@ public class Result {
     @Column(name = "laps")
     private Integer laps;
 
-    @Column(name = "best_lap")
-    private String bestLap;
+    @Column(name = "best_lap_ms")
+    private Integer bestLapMs;
 
-    @Column(name = "finish_time")
-    private String finishTime;
+    @Column(name = "finish_time_ms")
+    private Integer finishTimeMs;
 
  //   @Column(name = "elo_change")
   //  private Integer eloChange;
