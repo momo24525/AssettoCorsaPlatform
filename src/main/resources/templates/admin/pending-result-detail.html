@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Conferma risultati</title>
+</head>
+<body>
+
+<a th:href="@{/admin/pending-results}">&larr; Torna alla lista</a>
+
+<h1>Conferma risultati</h1>
+
+<p th:if="${error}" th:text="${error}" style="color:red"></p>
+
+<p>
+    File: <strong th:text="${preview.filename()}">file.json</strong><br>
+    Pista: <strong th:text="${preview.track()}">imola</strong><br>
+    Giri gara: <strong th:text="${preview.raceLaps()}">2</strong><br>
+    Ricevuto: <span th:text="${#temporals.format(preview.receivedAt(), 'dd/MM/yyyy HH:mm')}">01/01/2026 20:00</span>
+</p>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Pos</th>
+        <th>Pilota (AC)</th>
+        <th>SteamID (AC)</th>
+        <th>Utente del sito</th>
+        <th>Giri</th>
+        <th>Miglior giro</th>
+        <th>Tempo totale</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${preview.rows()}">
+        <td th:text="${row.position()}">1</td>
+        <td th:text="${row.driverName()}">Morgan</td>
+        <td th:text="${row.guid()}">76561199215569538</td>
+        <td>
+            <span th:if="${row.username() != null}" th:text="${row.username()}">morgan</span>
+            <span th:if="${row.username() == null}" style="color:red">Non registrato (verra' saltato)</span>
+        </td>
+        <td th:text="${row.laps()}">2</td>
+        <td th:text="${row.bestLap()}">2:13.560</td>
+        <td th:text="${row.totalTime()}">4:27.404</td>
+    </tr>
+    </tbody>
+</table>
+
+<form th:action="@{/admin/pending-results/{id}/confirm(id=${preview.id()})}" method="post">
+    <p>
+        <label>Evento:
+            <select name="eventId" required>
+                <option th:each="e : ${events}"
+                        th:value="${e.id}"
+                        th:selected="${e.id == preview.suggestedEventId()}"
+                        th:text="|#${e.id} - ${e.title ?: 'Senza titolo'} - ${e.track.name} - ${#temporals.format(e.startTime, 'dd/MM/yyyy HH:mm')}|">
+                    Evento
+                </option>
+            </select>
+        </label>
+    </p>
+    <button type="submit">Conferma e crea i risultati</button>
+</form>
+
+</body>
+</html>

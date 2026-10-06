@@ -1,10 +1,7 @@
 package it.webapp.ac_community_ita.service;
 
 import it.webapp.ac_community_ita.dto.EventSummaryDto;
-import it.webapp.ac_community_ita.entity.Event;
-import it.webapp.ac_community_ita.entity.Registration;
-import it.webapp.ac_community_ita.entity.RegistrationStatus;
-import it.webapp.ac_community_ita.entity.User;
+import it.webapp.ac_community_ita.entity.*;
 import it.webapp.ac_community_ita.repository.EventRepository;
 import it.webapp.ac_community_ita.repository.RegistrationRepository;
 import it.webapp.ac_community_ita.repository.UserRepository;
@@ -43,8 +40,9 @@ public class RegistrationService {
                  .orElseThrow(() -> new IllegalArgumentException("Evento non trovato"));
 
 
-        if (event.getStartTime().isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("L'evento è già iniziato");
+
+        if (event.getStatus() != EventStatus.SCHEDULED) {
+            throw new IllegalStateException("Le iscrizioni per questo evento sono chiuse");
         }
 
         User user = userRepository.findById(userId)
@@ -82,7 +80,15 @@ public class RegistrationService {
     @Transactional
     public void cancel(Long userId, Long eventId) {
         // 1. trova la registrazione con findByUserIdAndEventId
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new IllegalArgumentException("Evento non trovato"));
+
+        if (event.getStatus() != EventStatus.SCHEDULED) {
+            throw new IllegalStateException("Non puoi cancellare l'iscrizione: l'evento è già chiuso alle iscrizioni");
+        }
+
         Optional<Registration> existing = registrationRepository.findByUserIdAndEventId(userId, eventId);
+
         // 2. se non esiste, o è già CANCELLED, lancia un'eccezione
         if (existing.isEmpty() || existing.get().getStatus() == RegistrationStatus.CANCELLED)
         {throw new IllegalStateException("Registrazione inesistente o già cancellata");}

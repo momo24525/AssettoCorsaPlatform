@@ -61,7 +61,9 @@ public class SteamAuthController {
         SteamPlayer profile = steamProfileService.fetchProfile(steamId.get());
         User user = userService.findOrCreateFromSteam(profile);
 
-        request.changeSessionId(); // previene session fixation
+        if (request.getSession(false) != null) {
+            request.changeSessionId(); // previene session fixation
+        }
         steamAuthenticationService.authenticate(user, request, response);
 
         return "redirect:/home";

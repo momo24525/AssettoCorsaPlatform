@@ -1,5 +1,8 @@
 package it.webapp.ac_community_ita.controller.user;
 
+import it.webapp.ac_community_ita.service.SteamAuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
 import it.webapp.ac_community_ita.config.UserPrincipal;
 import it.webapp.ac_community_ita.dto.steam.UpdateProfileDto;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserProfileController {
 
     private final UserService userService;
+    private final SteamAuthenticationService steamAuthenticationService;
 
-    public UserProfileController(UserService userService) {
+    public UserProfileController(UserService userService, SteamAuthenticationService steamAuthenticationService) {
         this.userService = userService;
+        this.steamAuthenticationService = steamAuthenticationService;
     }
 
     @GetMapping("/update")
@@ -28,15 +33,14 @@ public class UserProfileController {
         return "update-profile";
     }
 
+
+
     @PostMapping("/update")
-    public String updateProfile(
-            @ModelAttribute UpdateProfileDto updateDto,
-            @AuthenticationPrincipal UserPrincipal userPrincipal) {
-
-        String steamId = userPrincipal.getUser().getSteamId();
-
-        User updatedUser = userService.updateUserProfile(steamId, updateDto);
-
+    public String updateProfile(@ModelAttribute UpdateProfileDto updateDto,
+                                @AuthenticationPrincipal UserPrincipal userPrincipal,
+                                HttpServletRequest request, HttpServletResponse response) {
+        User updatedUser = userService.updateUserProfile(userPrincipal.getUser().getSteamId(), updateDto);
+        steamAuthenticationService.authenticate(updatedUser, request, response); // aggiorna la sessione
         return "redirect:/home";
     }
 

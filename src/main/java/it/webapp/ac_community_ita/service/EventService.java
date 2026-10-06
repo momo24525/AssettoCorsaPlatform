@@ -2,6 +2,7 @@ package it.webapp.ac_community_ita.service;
 
 import it.webapp.ac_community_ita.dto.EventSummaryDto;
 import it.webapp.ac_community_ita.entity.Event;
+import it.webapp.ac_community_ita.entity.EventStatus;
 import it.webapp.ac_community_ita.entity.RegistrationStatus;
 import it.webapp.ac_community_ita.repository.EventRepository;
 import it.webapp.ac_community_ita.repository.RegistrationRepository;
@@ -27,26 +28,31 @@ public class EventService {
         this.registrationRepository = registrationRepository;
     }
 
-    public Optional<EventSummaryDto> getNextEvent(Long viewerId) {
-        List<Event> upcomingEvents = eventRepository.findUpcomingEvents(LocalDateTime.now(), PageRequest.of(0,1));
-
-        return upcomingEvents.stream()
-                .findFirst()
+    public Optional<EventSummaryDto> getLiveEvent(Long viewerId) {
+        return eventRepository.findFirstByStatusOrderByStartTimeAsc(EventStatus.LIVE)
                 .map(event -> toSummaryDto(event, viewerId));
     }
 
     public List<EventSummaryDto> getUpcomingEvents(int limit, Long viewerId) {
-        return eventRepository.findUpcomingEvents(LocalDateTime.now(), PageRequest.of(0, limit))
+        return eventRepository.findUpcomingEvents(LocalDateTime.now(), EventStatus.SCHEDULED, PageRequest.of(0, limit))
                 .stream()
                 .map(event -> toSummaryDto(event, viewerId))
                 .collect(Collectors.toList());
     }
 
     public List<EventSummaryDto> getAllUpcomingEvents(Long viewerId) {
-        return eventRepository.findUpcomingEvents(LocalDateTime.now(), Pageable.unpaged())
+        return eventRepository.findUpcomingEvents(LocalDateTime.now(), EventStatus.SCHEDULED, Pageable.unpaged())
                 .stream()
                 .map(event -> toSummaryDto(event, viewerId))
                 .collect(Collectors.toList());
+    }
+
+    public Optional<EventSummaryDto> getNextScheduledEvent(Long viewerId) {
+        return eventRepository
+                .findUpcomingEvents(LocalDateTime.now(), EventStatus.SCHEDULED, PageRequest.of(0, 1))
+                .stream()
+                .findFirst()
+                .map(event -> toSummaryDto(event, viewerId));
     }
 
     private EventSummaryDto toSummaryDto(Event event, Long viewerId) {
@@ -69,7 +75,8 @@ public class EventService {
                 (int) registeredCount,
                 event.getMaxPlayers(),
                 event.getTrack().getUrlImage(),
-                registered
+                registered,
+                event.getStatus()
         );
     }
 }

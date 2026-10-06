@@ -26,18 +26,67 @@
 
         </div>
 
-        <div class="hero-right" th:if="${nextEvent != null}">
+        <!-- HERO RIGHT -->
+        <!-- HERO RIGHT: 1) EVENTO LIVE -->
+        <div class="hero-right" th:if="${liveEvent != null}">
             <div class="hero-card">
-                <p style="
-        color: #ffffffed;
-        font-weight: 400;
-        padding-top: 6px;
-        text-align: center;
-        ">NEXT EVENT - <span th:text="${nextEvent.title}"> </span></p>
+                <p style="color: #ffffffed; font-weight: 400; padding-top: 6px; text-align: center;">
+                    <span th:if="${liveEvent.startTime.isAfter(#temporals.createNow())}">STARTING SOON</span>
+                    <span th:unless="${liveEvent.startTime.isAfter(#temporals.createNow())}">LIVE NOW</span>
+                    - <span th:text="${liveEvent.title}"></span>
+                </p>
+
+                <div class="separator"></div>
+                <div class="card-image card-image-small"
+                     th:style="'background-image: url(/images/tracks/' + ${liveEvent.trackImageUrl} + ')'">
+                    <div class="track-name" th:text="${liveEvent.trackName}">Track</div>
+                </div>
+                <div class="card-description">
+                    <p>
+                        <i class="bi bi-calendar-event"></i>
+                        <span th:text="${#temporals.format(liveEvent.startTime, 'dd MMMM yyyy')}">--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-clock"></i>
+                        <span th:text="${#temporals.format(liveEvent.startTime, 'HH:mm')}">--:--</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-car-front-fill"></i>
+                        <span th:text="${liveEvent.carName}">Car</span>
+                    </p>
+                    <p>
+                        <i class="bi bi-people"></i>
+                        <span th:text="${liveEvent.registeredPlayers} + '/' + ${liveEvent.maxPlayers}">--/--</span>
+                    </p>
+                </div>
+
+                <div class="buttons-card">
+                    <a th:href="@{/events}" class="btn btn-card">
+                        <i class="bi bi-info-circle"></i> INFO
+                    </a>
+                    <span class="btn btn-card btn-disabled">ISCRIZIONI CHIUSE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2) PROSSIMO EVENTO (NUOVA) -->
+        <div class="hero-right" th:if="${liveEvent == null and nextEvent != null}">
+            <div class="hero-card">
+                <p style="color: #ffffffed; font-weight: 400; padding-top: 6px; text-align: center;">
+                    NEXT EVENT - <span th:text="${nextEvent.title}"></span>
+                </p>
+
+
+
                 <div class="separator"></div>
                 <div class="card-image card-image-small"
                      th:style="'background-image: url(/images/tracks/' + ${nextEvent.trackImageUrl} + ')'">
-                    <div class="track-name" th:text="${nextEvent.trackName}">Track</div>
+                    <div class="track-name" th:if="${secondsToLive != null}"
+                         id = "live-countdown"
+                         th:attr="data-seconds=${secondsToLive}">
+                        <i class="bi bi-stopwatch"></i>
+                        <strong id="live-countdown-value">--:--:--</strong>
+                    </div>
                 </div>
                 <div class="card-description">
                     <p>
@@ -76,43 +125,31 @@
                         <button type="submit" class="btn btn-card">ANNULLA ISCRIZIONE</button>
                     </form>
                 </div>
-
             </div>
         </div>
 
-        <div class="hero-right" th:if="${nextEvent == null}">
+        <!-- 3) NESSUN EVENTO -->
+        <div class="hero-right" th:if="${liveEvent == null and nextEvent == null}">
             <div class="hero-card">
-                <p style="
-        color: #ffffffed;
-        font-weight: 400;
-        padding-top: 6px;
-        text-align: center;
-        ">NO UPCOMING EVENTS </p>
+                <p style="color: #ffffffed; font-weight: 400; padding-top: 6px; text-align: center;">
+                    NO UPCOMING EVENTS
+                </p>
                 <div class="separator"></div>
                 <div class="card-image">
                     <div class="track-name">---</div>
                 </div>
                 <div class="card-description">
-                    <p>
-                        <i class="bi bi-calendar-event"></i>
-                        <span>--:--</span>
-                    </p>
-                    <p>
-                        <i class="bi bi-clock"></i>
-                        <span>--:--</span>
-                    </p>
-                    <p>
-                        <i class="bi bi-car-front-fill"></i>
-                        <span>---</span>
-                    </p>
-                    <p>
-                        <i class="bi bi-people"></i>
-                        <span>--/--</span>
-                    </p>
+                    <p><i class="bi bi-calendar-event"></i> <span>--:--</span></p>
+                    <p><i class="bi bi-clock"></i> <span>--:--</span></p>
+                    <p><i class="bi bi-car-front-fill"></i> <span>---</span></p>
+                    <p><i class="bi bi-people"></i> <span>--/--</span></p>
                 </div>
-
             </div>
         </div>
+    </section>
+
+
+
     </section>
 
     <div th:replace="~{components/events-list :: eventsList(${scheduledEvents}, true)}"></div>
@@ -128,6 +165,53 @@
             <div th:replace="~{components/update-profile-form :: update-profile-form}"></div>
         </div>
     </th:block>
+
+    <script th:if="${secondsToLive != null}">
+        (function () {
+            const el = document.getElementById('live-countdown');
+            const label = document.getElementById('live-countdown-value');
+            if (!el || !label) return;
+
+            let remaining = parseInt(el.dataset.seconds, 10);
+            const MAX_RETRIES = 6;                       // evita reload infiniti se qualcosa non va
+            const RELOAD_DELAY_MS = 5000;                // tempo per lo scheduler (gira ogni 10s)
+
+            function format(total) {
+                const h = String(Math.floor(total / 3600)).padStart(2, '0');
+                const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
+                const s = String(total % 60).padStart(2, '0');
+                return h + ':' + m + ':' + s;
+            }
+
+            function reloadWithLimit() {
+                let retries = parseInt(sessionStorage.getItem('liveRetries') || '0', 10);
+                if (retries >= MAX_RETRIES) {
+                    sessionStorage.removeItem('liveRetries');
+                    return;                              // smette di riprovare
+                }
+                sessionStorage.setItem('liveRetries', String(retries + 1));
+                setTimeout(() => location.reload(), RELOAD_DELAY_MS);
+            }
+
+            label.textContent = format(remaining);
+
+            if (remaining <= 0) {
+                label.textContent = 'in partenza...';
+                reloadWithLimit();
+                return;
+            }
+
+            const timer = setInterval(() => {
+                remaining--;
+                label.textContent = format(Math.max(remaining, 0));
+                if (remaining <= 0) {
+                    clearInterval(timer);
+                    label.textContent = 'in partenza...';
+                    reloadWithLimit();
+                }
+            }, 1000);
+        })();
+    </script>
 
 </main>
 

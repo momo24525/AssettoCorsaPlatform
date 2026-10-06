@@ -38,9 +38,6 @@ ac:
   results:
     api-key: ${AC_API_KEY}
 
-logging:
-  level:
-    org.springframework.security: DEBUG
 
 ---
 # Profilo PROD
