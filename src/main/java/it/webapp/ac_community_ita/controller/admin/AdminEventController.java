@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/admin/event")
+@RequestMapping("/admin/events")
 
 public class AdminEventController {
 
@@ -47,7 +47,7 @@ public class AdminEventController {
             return "admin/event-form";
         }
         adminEventService.create(eventFormDto);
-        return "redirect:/admin/event";
+        return "redirect:/admin/events";
     }
 
 

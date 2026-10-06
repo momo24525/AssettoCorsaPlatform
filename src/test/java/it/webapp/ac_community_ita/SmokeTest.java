@@ -56,7 +56,7 @@ class SmokeTest {
     void adminPagesRenderForAdmin() throws Exception {
         mockMvc.perform(get("/admin/cars")).andExpect(status().isOk());
         mockMvc.perform(get("/admin/tracks")).andExpect(status().isOk());
-        mockMvc.perform(get("/admin/event")).andExpect(status().isOk());
+        mockMvc.perform(get("/admin/events")).andExpect(status().isOk());
         mockMvc.perform(get("/admin/pending-results")).andExpect(status().isOk());
     }
 

@@ -8,7 +8,7 @@
 
 <h1>Events List</h1>
 
-<a th:href="@{/admin/event/new}">+ Aggiungi nuovo evento</a>
+<a th:href="@{/admin/events/new}">+ Aggiungi nuovo evento</a>
 
 <table border="1">
     <thead>
@@ -33,7 +33,7 @@
         <td th:text="${event.maxPlayers}">20</td>
         <td th:text="${event.status}">SCHEDULED</td>
         <td>
-            <form th:action="@{/admin/event/{id}/delete(id=${event.id})}" method="post" style="display:inline">
+            <form th:action="@{/admin/events/{id}/delete(id=${event.id})}" method="post" style="display:inline">
                 <button type="submit" onclick="return confirm('Sei sicuro?')">Elimina</button>
             </form>
         </td>
