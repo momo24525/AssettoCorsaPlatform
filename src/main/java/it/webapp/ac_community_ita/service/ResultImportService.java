@@ -96,7 +96,7 @@ public class ResultImportService {
         for (DriverEntry d : driverEntries(dto)) {
             ResultEntryDto e = d.entry();
 
-            // Il Guid di AC e' lo SteamID64, che nel tuo DB e' User.steamId
+            // Il Guid di AC e' lo SteamID64, che nel DB e' User.steamId
             Optional<User> user = userRepository.findBySteamId(e.getDriverGuid());
             if (user.isEmpty()) {
                 continue; // pilota non registrato sul sito: salta (la posizione resta quella reale)
@@ -113,7 +113,7 @@ public class ResultImportService {
         }
 
         resultRepository.saveAll(toSave);
-        event.setStatus(EventStatus.FINISHED); // togli questa riga se vuoi gestirlo altrove
+        event.setStatus(EventStatus.FINISHED); // DA VEDERE SE GESTIRLO QUI O ALTROVE
         pendingResultRepository.delete(pending); // oppure aggiungi un flag "processed"
         return toSave.size();
     }

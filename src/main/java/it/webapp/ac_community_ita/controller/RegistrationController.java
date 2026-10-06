@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class RegistrationController {
 
-    // il service nel costruttore, come al solito
+
     private final RegistrationService registrationService;
 
 
@@ -25,15 +25,13 @@ public class RegistrationController {
                            @AuthenticationPrincipal UserPrincipal userPrincipal,
                            RedirectAttributes redirectAttributes) {
 
-        // 1. prendi l'id dell'utente
         Long userId = userPrincipal.getUser().getId();
-        // 2. chiama registrationService.register(userId, eventId)
         try {
             registrationService.register(userId, eventId);
         } catch (IllegalStateException | IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        // 3. redirect
+
         return "redirect:/home";
     }
 

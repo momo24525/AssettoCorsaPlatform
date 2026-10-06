@@ -18,12 +18,10 @@ public class SecurityConfig {
                 // Autentica lo script Python se l'header X-API-KEY e' corretto
                 .addFilterBefore(new ApiKeyAuthFilter(resultsApiKey), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers("/", "/home", "/events", "/error", "/races", "/races/{id}").permitAll()
                         .requestMatchers("/", "/auth/steam", "/auth/steam/callback", "/home").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                        // DEVE stare prima di /admin/**: solo chi ha la API key
-                        .requestMatchers("/admin/results/incoming").hasRole("RESULTS_UPLOADER")
+                        .requestMatchers("/admin/results/incoming").hasRole("RESULTS_UPLOADER") // DEVE stare prima di /admin/**: solo chi ha la API key
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()

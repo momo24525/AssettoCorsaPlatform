@@ -20,19 +20,18 @@ public class RegistrationService {
 
 
     public RegistrationService(EventRepository eventRepository,
-                        RegistrationRepository registrationRepository,
-                        UserRepository userRepository) {
+                               RegistrationRepository registrationRepository,
+                               UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.registrationRepository = registrationRepository;
         this.userRepository = userRepository;
     }
 
     @Transactional
-    public RegistrationStatus register(Long userId, Long eventId){
+    public RegistrationStatus register(Long userId, Long eventId) {
 
-         Event event = eventRepository.findById(eventId)
-                 .orElseThrow(() -> new IllegalArgumentException("Evento non trovato"));
-
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new IllegalArgumentException("Evento non trovato"));
 
 
         if (event.getStatus() != EventStatus.SCHEDULED) {
@@ -54,17 +53,17 @@ public class RegistrationService {
             registration = new Registration();
             registration.setUser(user);
             registration.setEvent(event);
-        }
-        else {
+        } else {
             registration = existing.get();
         }
 
         Long subscribed = registrationRepository.countByEventIdAndStatus(eventId, RegistrationStatus.CONFIRMED);
 
-        if (subscribed < event.getMaxPlayers()){
+        if (subscribed < event.getMaxPlayers()) {
             registration.setStatus(RegistrationStatus.CONFIRMED);
+        } else {
+            registration.setStatus(RegistrationStatus.WAITLIST);
         }
-        else {registration.setStatus(RegistrationStatus.WAITLIST);}
         registration.setRegistrationDate(LocalDateTime.now());
         registrationRepository.save(registration);
 
@@ -73,7 +72,7 @@ public class RegistrationService {
 
     @Transactional
     public void cancel(Long userId, Long eventId) {
-        // 1. trova la registrazione con findByUserIdAndEventId
+
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new IllegalArgumentException("Evento non trovato"));
 
@@ -83,11 +82,12 @@ public class RegistrationService {
 
         Optional<Registration> existing = registrationRepository.findByUserIdAndEventId(userId, eventId);
 
-        // 2. se non esiste, o è già CANCELLED, lancia un'eccezione
-        if (existing.isEmpty() || existing.get().getStatus() == RegistrationStatus.CANCELLED)
-        {throw new IllegalStateException("Registrazione inesistente o già cancellata");}
 
-        // 3. altrimenti, imposta lo stato a CANCELLED e salva
+        if (existing.isEmpty() || existing.get().getStatus() == RegistrationStatus.CANCELLED) {
+            throw new IllegalStateException("Registrazione inesistente o già cancellata");
+        }
+
+
         Registration registration = existing.get();
         registration.setStatus(RegistrationStatus.CANCELLED);
         registrationRepository.save(registration);

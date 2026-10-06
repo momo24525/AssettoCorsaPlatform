@@ -13,11 +13,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
-/**
- * Autentica le richieste dello script Python tramite l'header X-API-KEY.
- * NON e' un @Component: viene creato solo in ResultsIngestSecurityConfig,
- * cosi' non viene registrato su tutte le richieste dell'applicazione.
- */
+
 public class ApiKeyAuthFilter extends OncePerRequestFilter {
 
     private static final String HEADER = "X-API-KEY";

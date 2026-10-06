@@ -39,11 +39,10 @@ public class SteamAuthController {
         return "redirect:" + steamOpenIdService.buildLoginUrl();
     }
 
-    @GetMapping("/logout") // o @GetMapping se preferisci non usare form
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         steamAuthenticationService.logout(request, response);
 
-        // Il controller si occupa solo della navigation/redirect
         return "redirect:/home";
     }
 

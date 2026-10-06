@@ -18,27 +18,3 @@ public class SteamProfileService {
     }
 }
 
-/******VERSIONE CON API KEY, DA IMPLEMENTARE QUANDO AVRO' SPESO I 5 DOLLARI***************+
-@Service
-public class SteamProfileService {
-
-    @Value("${steam.api-key}")
-    private String apiKey;
-
-    private final RestTemplate restTemplate = new RestTemplate();
-
-    public SteamPlayer fetchProfile(String steamId) {
-        String url = UriComponentsBuilder
-                .fromUriString("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/")
-                .queryParam("key", apiKey)
-                .queryParam("steamids", steamId)
-                .build().toUriString();
-
-        SteamApiResponse response = restTemplate.getForObject(url, SteamApiResponse.class);
-
-        if (response == null || response.response.players.isEmpty()) {
-            throw new IllegalStateException("Profilo Steam non trovato per id: " + steamId);
-        }
-        return response.response.players.get(0);
-    }
-}  */
