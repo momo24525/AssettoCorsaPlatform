@@ -11,21 +11,8 @@
 	<groupId>it.webapp</groupId>
 	<artifactId>ac-community-ita</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+    <name>RaceHub Community</name>
+    <description>Piattaforma per la community italiana di Assetto Corsa: eventi, iscrizioni e risultati</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
