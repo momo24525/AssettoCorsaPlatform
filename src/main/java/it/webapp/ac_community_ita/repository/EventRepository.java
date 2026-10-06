@@ -1,7 +1,7 @@
 package it.webapp.ac_community_ita.repository;
 
-import it.webapp.ac_community_ita.entity.Event;
-import it.webapp.ac_community_ita.entity.EventStatus;
+import it.webapp.ac_community_ita.entity.event.Event;
+import it.webapp.ac_community_ita.entity.event.EventStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

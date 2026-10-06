@@ -1,8 +1,8 @@
 package it.webapp.ac_community_ita.controller.admin;
 
-import it.webapp.ac_community_ita.dto.CarDto;
-import it.webapp.ac_community_ita.entity.CarClass;
-import it.webapp.ac_community_ita.service.AdminCarService;
+import it.webapp.ac_community_ita.dto.admin.CarFormDto;
+import it.webapp.ac_community_ita.entity.car.CarClass;
+import it.webapp.ac_community_ita.service.admin.AdminCarService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,19 +33,19 @@ public class AdminCarController {
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("carDto", new CarDto());
+        model.addAttribute("carDto", new CarFormDto());
         return "admin/car-form";
     }
 
 
 
     @PostMapping
-    public String create(@Valid @ModelAttribute CarDto carDto, BindingResult result) {
+    public String create(@Valid @ModelAttribute CarFormDto carFormDto, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/car-form";
         }
         try {
-            adminCarService.create(carDto);
+            adminCarService.create(carFormDto);
         } catch (IllegalArgumentException e) {
             result.rejectValue("name", "duplicate", e.getMessage());
             return "admin/car-form";
@@ -56,7 +56,7 @@ public class AdminCarController {
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
         var car = adminCarService.findById(id);
-        CarDto dto = new CarDto();
+        CarFormDto dto = new CarFormDto();
         dto.setName(car.getName());
         dto.setCarClass(car.getCarClass());
         model.addAttribute("carDto", dto);
@@ -65,11 +65,11 @@ public class AdminCarController {
     }
 
     @PostMapping("/{id}")
-    public String update(@PathVariable Long id, @Valid @ModelAttribute CarDto carDto, BindingResult result) {
+    public String update(@PathVariable Long id, @Valid @ModelAttribute CarFormDto carFormDto, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/car-form";
         }
-        adminCarService.update(id, carDto);
+        adminCarService.update(id, carFormDto);
         return "redirect:/admin/cars";
     }
 

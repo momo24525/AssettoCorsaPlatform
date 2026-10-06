@@ -2,8 +2,8 @@ package it.webapp.ac_community_ita.service;
 
 import it.webapp.ac_community_ita.dto.steam.SteamPlayer;
 import it.webapp.ac_community_ita.dto.steam.UpdateProfileDto;
-import it.webapp.ac_community_ita.entity.Role;
-import it.webapp.ac_community_ita.entity.User;
+import it.webapp.ac_community_ita.entity.user.Role;
+import it.webapp.ac_community_ita.entity.user.User;
 import it.webapp.ac_community_ita.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

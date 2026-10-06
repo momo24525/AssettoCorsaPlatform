@@ -1,10 +1,10 @@
 package it.webapp.ac_community_ita.controller;
 
-import it.webapp.ac_community_ita.components.EventStatusScheduler;
-import it.webapp.ac_community_ita.config.UserPrincipal;
-import it.webapp.ac_community_ita.dto.EventSummaryDto;
-import it.webapp.ac_community_ita.entity.User;
-import it.webapp.ac_community_ita.service.EventService;
+import it.webapp.ac_community_ita.scheduler.EventStatusScheduler;
+import it.webapp.ac_community_ita.security.UserPrincipal;
+import it.webapp.ac_community_ita.dto.events.EventSummaryDto;
+import it.webapp.ac_community_ita.entity.user.User;
+import it.webapp.ac_community_ita.service.events.EventService;
 import it.webapp.ac_community_ita.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

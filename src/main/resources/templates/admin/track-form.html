@@ -10,7 +10,7 @@
 <h1 th:text="${trackId} != null ? 'Modifica Track' : 'Nuova Track'">Form Track</h1>
 
 <form th:action="${trackId} != null ? @{/admin/tracks/{id}(id=${trackId})} : @{/admin/tracks}"
-      th:object="${trackDto}"
+      th:object="${trackFormDto}"
       method="post">
 
     <label for="name">Nome:</label>

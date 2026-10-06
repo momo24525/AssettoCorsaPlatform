@@ -10,7 +10,7 @@
 <h1 th:text="${eventId} != null ? 'Modifica Event' : 'Nuovo Event'">Form Event</h1>
 
 <form th:action="${eventId} != null ? @{/admin/event/{id}(id=${eventId})} : @{/admin/event}"
-      th:object="${eventDto}"
+      th:object="${eventFormDto}"
       method="post">
 
     <label for="title">Nome evento (title):</label>

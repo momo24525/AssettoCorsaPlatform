@@ -1,7 +1,7 @@
 package it.webapp.ac_community_ita.controller.admin;
 
-import it.webapp.ac_community_ita.service.AdminEventService;
-import it.webapp.ac_community_ita.service.ResultImportService;
+import it.webapp.ac_community_ita.service.admin.AdminEventService;
+import it.webapp.ac_community_ita.service.results.ResultImportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

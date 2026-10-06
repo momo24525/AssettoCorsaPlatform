@@ -1,9 +1,9 @@
 package it.webapp.ac_community_ita.controller.admin;
 
-import it.webapp.ac_community_ita.dto.EventDto;
-import it.webapp.ac_community_ita.service.AdminCarService;
-import it.webapp.ac_community_ita.service.AdminEventService;
-import it.webapp.ac_community_ita.service.AdminTrackService;
+import it.webapp.ac_community_ita.dto.admin.EventFormDto;
+import it.webapp.ac_community_ita.service.admin.AdminCarService;
+import it.webapp.ac_community_ita.service.admin.AdminEventService;
+import it.webapp.ac_community_ita.service.admin.AdminTrackService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +33,7 @@ public class AdminEventController {
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("eventDto", new EventDto());
+        model.addAttribute("eventDto", new EventFormDto());
         model.addAttribute("cars", adminCarService.findAll());
         model.addAttribute("tracks", adminTrackService.findAll());
         return "admin/event-form";
@@ -42,11 +42,11 @@ public class AdminEventController {
 
 
     @PostMapping
-    public String create(@Valid @ModelAttribute EventDto eventDto, BindingResult result) {
+    public String create(@Valid @ModelAttribute EventFormDto eventFormDto, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/event-form";
         }
-        adminEventService.create(eventDto);
+        adminEventService.create(eventFormDto);
         return "redirect:/admin/event";
     }
 

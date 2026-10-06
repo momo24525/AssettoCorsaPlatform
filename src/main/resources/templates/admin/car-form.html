@@ -10,7 +10,7 @@
 <h1 th:text="${carId} != null ? 'Modifica Auto' : 'Nuova Auto'">Form Auto</h1>
 
 <form th:action="${carId} != null ? @{/admin/cars/{id}(id=${carId})} : @{/admin/cars}"
-      th:object="${carDto}"
+      th:object="${carFormDto}"
       method="post">
 
     <label for="name">Nome:</label>

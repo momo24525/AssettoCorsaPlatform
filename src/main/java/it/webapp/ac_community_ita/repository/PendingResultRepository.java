@@ -1,6 +1,6 @@
 package it.webapp.ac_community_ita.repository;
 
-import it.webapp.ac_community_ita.entity.PendingResult;
+import it.webapp.ac_community_ita.entity.results.PendingResult;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

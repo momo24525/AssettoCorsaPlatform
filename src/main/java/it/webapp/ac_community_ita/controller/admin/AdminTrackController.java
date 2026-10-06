@@ -1,7 +1,7 @@
 package it.webapp.ac_community_ita.controller.admin;
 
-import it.webapp.ac_community_ita.dto.TrackDto;
-import it.webapp.ac_community_ita.service.AdminTrackService;
+import it.webapp.ac_community_ita.dto.admin.TrackFormDto;
+import it.webapp.ac_community_ita.service.admin.AdminTrackService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,19 +26,19 @@ public class AdminTrackController {
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        model.addAttribute("trackDto", new TrackDto());
+        model.addAttribute("trackDto", new TrackFormDto());
         return "admin/track-form";
     }
 
 
 
     @PostMapping
-    public String create(@Valid @ModelAttribute TrackDto trackDto, BindingResult result) {
+    public String create(@Valid @ModelAttribute TrackFormDto trackFormDto, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/track-form";
         }
         try {
-            adminTrackService.create(trackDto);
+            adminTrackService.create(trackFormDto);
         } catch (IllegalArgumentException e) {
             result.rejectValue("name", "duplicate", e.getMessage());
             return "admin/track-form";

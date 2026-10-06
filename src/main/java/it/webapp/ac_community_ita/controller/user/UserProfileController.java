@@ -1,9 +1,9 @@
 package it.webapp.ac_community_ita.controller.user;
 
-import it.webapp.ac_community_ita.config.UserPrincipal;
+import it.webapp.ac_community_ita.security.UserPrincipal;
 import it.webapp.ac_community_ita.dto.steam.UpdateProfileDto;
-import it.webapp.ac_community_ita.entity.User;
-import it.webapp.ac_community_ita.service.SteamAuthenticationService;
+import it.webapp.ac_community_ita.entity.user.User;
+import it.webapp.ac_community_ita.service.steam.SteamAuthenticationService;
 import it.webapp.ac_community_ita.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
