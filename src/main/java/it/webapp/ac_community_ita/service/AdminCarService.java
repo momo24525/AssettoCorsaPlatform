@@ -3,17 +3,20 @@ package it.webapp.ac_community_ita.service;
 import it.webapp.ac_community_ita.dto.CarDto;
 import it.webapp.ac_community_ita.entity.Car;
 import it.webapp.ac_community_ita.repository.CarRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class AdminCarService {
 
     private final CarRepository carRepository;
+
+    public AdminCarService(CarRepository carRepository) {
+        this.carRepository =  carRepository;
+    }
+
 
     public List<Car> findAll() {
         return carRepository.findAll();

@@ -4,7 +4,7 @@ import it.webapp.ac_community_ita.entity.*;
 import it.webapp.ac_community_ita.repository.EventRepository;
 import it.webapp.ac_community_ita.repository.RegistrationRepository;
 import it.webapp.ac_community_ita.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

@@ -3,7 +3,6 @@ package it.webapp.ac_community_ita.controller.admin;
 import it.webapp.ac_community_ita.dto.TrackDto;
 import it.webapp.ac_community_ita.service.AdminTrackService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,10 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin/tracks")
-@RequiredArgsConstructor
 public class AdminTrackController {
 
     private final AdminTrackService adminTrackService;
+
+    public AdminTrackController(AdminTrackService adminTrackService) {
+        this.adminTrackService = adminTrackService;
+    }
 
     @GetMapping
     public String list(Model model) {

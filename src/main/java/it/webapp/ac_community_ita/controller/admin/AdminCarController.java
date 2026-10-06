@@ -4,7 +4,6 @@ import it.webapp.ac_community_ita.dto.CarDto;
 import it.webapp.ac_community_ita.entity.CarClass;
 import it.webapp.ac_community_ita.service.AdminCarService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,10 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin/cars")
-@RequiredArgsConstructor
+
 public class AdminCarController {
 
     private final AdminCarService adminCarService;
+
+    public AdminCarController(AdminCarService adminCarService) {
+        this.adminCarService = adminCarService;
+    }
 
     @ModelAttribute("carClasses")
     public CarClass[] carClasses() {

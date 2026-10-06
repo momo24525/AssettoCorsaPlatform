@@ -9,7 +9,6 @@ import it.webapp.ac_community_ita.repository.EventRepository;
 import it.webapp.ac_community_ita.repository.PendingResultRepository;
 import it.webapp.ac_community_ita.repository.ResultRepository;
 import it.webapp.ac_community_ita.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.core.JacksonException;
@@ -20,7 +19,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ResultImportService {
 
     // Valore che AC usa quando un pilota non ha giri validi
@@ -31,6 +29,14 @@ public class ResultImportService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+
+    public ResultImportService(PendingResultRepository pendingResultRepository, ResultRepository resultRepository, EventRepository eventRepository, UserRepository userRepository, ObjectMapper objectMapper) {
+        this.pendingResultRepository = pendingResultRepository;
+        this.resultRepository = resultRepository;
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
+    }
 
     // ---------------------------------------------------------------- lettura
 

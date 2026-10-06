@@ -3,16 +3,18 @@ package it.webapp.ac_community_ita.service;
 import it.webapp.ac_community_ita.dto.TrackDto;
 import it.webapp.ac_community_ita.entity.Track;
 import it.webapp.ac_community_ita.repository.TrackRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class AdminTrackService {
 
     private final TrackRepository trackRepository;
+
+    public AdminTrackService(TrackRepository trackRepository) {
+        this.trackRepository = trackRepository;
+    }
 
     public List<Track> findAll() {
         return trackRepository.findAll();

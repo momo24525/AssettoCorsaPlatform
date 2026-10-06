@@ -9,19 +9,23 @@ import it.webapp.ac_community_ita.repository.CarRepository;
 import it.webapp.ac_community_ita.repository.EventRepository;
 import it.webapp.ac_community_ita.repository.TrackRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class AdminEventService {
 
     private final EventRepository eventRepository;
     private final CarRepository carRepository;
     private final TrackRepository trackRepository;
+
+    public AdminEventService(EventRepository eventRepository, CarRepository carRepository, TrackRepository trackRepository) {
+        this.eventRepository = eventRepository;
+        this.carRepository = carRepository;
+        this.trackRepository = trackRepository;
+    }
 
     public List<Event> findAll() {
         return eventRepository.findAll();

@@ -2,7 +2,6 @@ package it.webapp.ac_community_ita.controller.admin;
 
 import it.webapp.ac_community_ita.service.AdminEventService;
 import it.webapp.ac_community_ita.service.ResultImportService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +9,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/pending-results")
-@RequiredArgsConstructor
 public class AdminPendingResultController {
 
     private final ResultImportService resultImportService;
     private final AdminEventService adminEventService;
+
+    public AdminPendingResultController(ResultImportService resultImportService, AdminEventService adminEventService) {
+        this.resultImportService = resultImportService;
+        this.adminEventService = adminEventService;
+    }
 
     @GetMapping
     public String list(Model model) {

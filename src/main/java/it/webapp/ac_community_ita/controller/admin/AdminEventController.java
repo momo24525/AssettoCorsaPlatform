@@ -5,7 +5,6 @@ import it.webapp.ac_community_ita.service.AdminCarService;
 import it.webapp.ac_community_ita.service.AdminEventService;
 import it.webapp.ac_community_ita.service.AdminTrackService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,12 +12,18 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin/event")
-@RequiredArgsConstructor
+
 public class AdminEventController {
 
     private final AdminEventService adminEventService;
     private final AdminCarService adminCarService;
     private final AdminTrackService adminTrackService;
+
+    public AdminEventController(AdminEventService adminEventService, AdminCarService adminCarService, AdminTrackService adminTrackService) {
+        this.adminCarService = adminCarService;
+        this.adminEventService = adminEventService;
+        this.adminTrackService = adminTrackService;
+    }
 
     @GetMapping
     public String list(Model model) {

@@ -1,7 +1,6 @@
 package it.webapp.ac_community_ita.controller;
 
 import it.webapp.ac_community_ita.service.PendingResultService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,10 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequiredArgsConstructor
+
 public class ResultsIngestController {
 
     private final PendingResultService pendingResultService;
+
+    public ResultsIngestController(PendingResultService pendingResultService) {
+        this.pendingResultService = pendingResultService;
+    }
 
     /**
      * Risponde 200 sia quando salva sia quando ignora (non e' una gara, o file gia' ricevuto):
