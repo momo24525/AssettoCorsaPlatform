@@ -1,17 +1,19 @@
 package it.webapp.ac_community_ita.controller.user;
 
-import it.webapp.ac_community_ita.service.SteamAuthenticationService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.ui.Model;
 import it.webapp.ac_community_ita.config.UserPrincipal;
 import it.webapp.ac_community_ita.dto.steam.UpdateProfileDto;
 import it.webapp.ac_community_ita.entity.User;
+import it.webapp.ac_community_ita.service.SteamAuthenticationService;
 import it.webapp.ac_community_ita.service.UserService;
-import org.springframework.http.ResponseEntity;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/api/profile")

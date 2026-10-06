@@ -1,12 +1,5 @@
 package it.webapp.ac_community_ita.service.steam;
 
-import it.webapp.ac_community_ita.dto.steam.SteamApiResponse;
-import it.webapp.ac_community_ita.dto.steam.SteamPlayer;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import it.webapp.ac_community_ita.dto.steam.SteamPlayer;
 import org.springframework.stereotype.Service;
 

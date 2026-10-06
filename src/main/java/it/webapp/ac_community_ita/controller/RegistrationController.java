@@ -1,12 +1,6 @@
 package it.webapp.ac_community_ita.controller;
 
 import it.webapp.ac_community_ita.config.UserPrincipal;
-import it.webapp.ac_community_ita.repository.EventRepository;
-import it.webapp.ac_community_ita.repository.RegistrationRepository;
-import it.webapp.ac_community_ita.repository.UserRepository;
-import it.webapp.ac_community_ita.service.AdminCarService;
-import it.webapp.ac_community_ita.service.AdminEventService;
-import it.webapp.ac_community_ita.service.AdminTrackService;
 import it.webapp.ac_community_ita.service.RegistrationService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
 package it.webapp.ac_community_ita.service;
 
-import it.webapp.ac_community_ita.entity.User;
 import it.webapp.ac_community_ita.config.UserPrincipal;
+import it.webapp.ac_community_ita.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

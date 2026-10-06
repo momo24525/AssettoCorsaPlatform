@@ -1,11 +1,11 @@
 package it.webapp.ac_community_ita.controller;
 
+import it.webapp.ac_community_ita.config.UserPrincipal;
 import it.webapp.ac_community_ita.service.EventService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import it.webapp.ac_community_ita.config.UserPrincipal;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Controller
 public class EventController {

@@ -1,20 +1,14 @@
 package it.webapp.ac_community_ita.service;
 
-import it.webapp.ac_community_ita.dto.EventSummaryDto;
 import it.webapp.ac_community_ita.entity.*;
 import it.webapp.ac_community_ita.repository.EventRepository;
 import it.webapp.ac_community_ita.repository.RegistrationRepository;
 import it.webapp.ac_community_ita.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.PageRequest;
-
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class RegistrationService {

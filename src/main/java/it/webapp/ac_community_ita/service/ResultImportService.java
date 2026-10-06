@@ -4,11 +4,7 @@ import it.webapp.ac_community_ita.dto.results.AcResultJsonDto;
 import it.webapp.ac_community_ita.dto.results.LapEntryDto;
 import it.webapp.ac_community_ita.dto.results.PendingResultPreviewDto;
 import it.webapp.ac_community_ita.dto.results.ResultEntryDto;
-import it.webapp.ac_community_ita.entity.Event;
-import it.webapp.ac_community_ita.entity.EventStatus;
-import it.webapp.ac_community_ita.entity.PendingResult;
-import it.webapp.ac_community_ita.entity.Result;
-import it.webapp.ac_community_ita.entity.User;
+import it.webapp.ac_community_ita.entity.*;
 import it.webapp.ac_community_ita.repository.EventRepository;
 import it.webapp.ac_community_ita.repository.PendingResultRepository;
 import it.webapp.ac_community_ita.repository.ResultRepository;
@@ -20,14 +16,7 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
