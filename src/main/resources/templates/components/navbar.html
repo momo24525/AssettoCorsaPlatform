@@ -17,12 +17,13 @@
     </div>
 
     <div class="navbar-menu">
-        <a th:href="@{/home}" class="navbar-link active">Home</a>
-        <a th:href="@{/eventi}" class="navbar-link">Eventi</a>
-        <a th:href="@{/classifiche}" class="navbar-link">Classifiche</a>
-        <a th:href="@{/community}" class="navbar-link">Community</a>
-        <a th:href="@{/news}" class="navbar-link">News</a>
-        <a th:href="@{/shop}" class="navbar-link">Shop</a>
+        <a class="navbar-link"
+           th:classappend="${#strings.startsWith(currentUri, '/home')} ? 'active'"
+           th:href="@{/home}">Home</a>
+
+        <a class="navbar-link"
+           th:classappend="${#strings.startsWith(currentUri, '/events')} ? 'active'"
+           th:href="@{/events}">Eventi</a>
     </div>
 
     <div class="navbar-actions">
