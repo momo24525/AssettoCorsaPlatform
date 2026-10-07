@@ -391,3 +391,11 @@ line-height: 33px;
   box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
 }
 /***SEZIONE UPDATE PROFILE***********/
+
+
+.hero-card-title {
+    color: #ffffffed;
+    font-weight: 400;
+    padding-top: 6px;
+    text-align: center;
+}

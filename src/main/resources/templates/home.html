@@ -5,7 +5,7 @@
       layout:decorate="~{layout/base}">
 
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <title>Home</title>
 </head>
 
@@ -27,10 +27,9 @@
         </div>
 
         <!-- HERO RIGHT -->
-        <!-- HERO RIGHT: 1) EVENTO LIVE -->
         <div class="hero-right" th:if="${liveEvent != null}">
             <div class="hero-card">
-                <p style="color: #ffffffed; font-weight: 400; padding-top: 6px; text-align: center;">
+                <p class="hero-card-title">
                     <span th:if="${liveEvent.startTime.isAfter(#temporals.createNow())}">STARTING SOON</span>
                     <span th:unless="${liveEvent.startTime.isAfter(#temporals.createNow())}">LIVE NOW</span>
                     - <span th:text="${liveEvent.title}"></span>
@@ -72,7 +71,7 @@
         <!-- 2) PROSSIMO EVENTO (NUOVA) -->
         <div class="hero-right" th:if="${liveEvent == null and nextEvent != null}">
             <div class="hero-card">
-                <p style="color: #ffffffed; font-weight: 400; padding-top: 6px; text-align: center;">
+                <p class="hero-card-title">
                     NEXT EVENT - <span th:text="${nextEvent.title}"></span>
                 </p>
 
@@ -131,7 +130,7 @@
         <!-- 3) NESSUN EVENTO -->
         <div class="hero-right" th:if="${liveEvent == null and nextEvent == null}">
             <div class="hero-card">
-                <p style="color: #ffffffed; font-weight: 400; padding-top: 6px; text-align: center;">
+                <p class="hero-card-title">
                     NO UPCOMING EVENTS
                 </p>
                 <div class="separator"></div>
@@ -149,9 +148,6 @@
     </section>
 
 
-
-    </section>
-
     <div th:replace="~{components/events-list :: eventsList(${scheduledEvents}, true)}"></div>
 
     <!-- NEWS + SIDEBAR -->
@@ -166,52 +162,7 @@
         </div>
     </th:block>
 
-    <script th:if="${secondsToLive != null}">
-        (function () {
-            const el = document.getElementById('live-countdown');
-            const label = document.getElementById('live-countdown-value');
-            if (!el || !label) return;
-
-            let remaining = parseInt(el.dataset.seconds, 10);
-            const MAX_RETRIES = 6;                       // evita reload infiniti se qualcosa non va
-            const RELOAD_DELAY_MS = 5000;                // tempo per lo scheduler (gira ogni 10s)
-
-            function format(total) {
-                const h = String(Math.floor(total / 3600)).padStart(2, '0');
-                const m = String(Math.floor((total % 3600) / 60)).padStart(2, '0');
-                const s = String(total % 60).padStart(2, '0');
-                return h + ':' + m + ':' + s;
-            }
-
-            function reloadWithLimit() {
-                let retries = parseInt(sessionStorage.getItem('liveRetries') || '0', 10);
-                if (retries >= MAX_RETRIES) {
-                    sessionStorage.removeItem('liveRetries');
-                    return;                              // smette di riprovare
-                }
-                sessionStorage.setItem('liveRetries', String(retries + 1));
-                setTimeout(() => location.reload(), RELOAD_DELAY_MS);
-            }
-
-            label.textContent = format(remaining);
-
-            if (remaining <= 0) {
-                label.textContent = 'in partenza...';
-                reloadWithLimit();
-                return;
-            }
-
-            const timer = setInterval(() => {
-                remaining--;
-                label.textContent = format(Math.max(remaining, 0));
-                if (remaining <= 0) {
-                    clearInterval(timer);
-                    label.textContent = 'in partenza...';
-                    reloadWithLimit();
-                }
-            }, 1000);
-        })();
-    </script>
+    <script th:if="${secondsToLive != null}" th:srcth:src="@{/js/countdown.js}"></script>
 
 </main>
 
